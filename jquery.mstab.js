@@ -4,10 +4,11 @@
  * 修正当前tab指定的a 如果没有找到同级元素返回父级获取index
  * 2016/10/24 添加view 参数,可以选择显示第几个 (后续添加个可以根据url参数读取默认tab的)
  * 2017/01/05 添加自动播放
+ * 2017/11/16 添加模块支持
  * */
 
 /*
-
+调用示例：
  $('.tab-mode2').mstab({
  "event":"click mouseenter",
  "hd":".tab-hd",
@@ -19,7 +20,19 @@
  */
 
 //updata
-$.fn.mstab = function (op) {
+;(function(root, factory) {
+
+ if (typeof define === 'function' && define.amd) {
+   define(factory);
+ } else if (typeof exports === 'object') {
+   module.exports = factory();
+ } else {
+   root.jQuery.fn.mstab = factory();
+ }
+
+})(this, function() {  //this => windows
+
+jQuery.fn.mstab = function (op) {
 	var de = {
 		"action_class": "cur",			//切换加的class [可空]
 		"event": "click mouseenter",	//事件类型 [可空]
@@ -190,3 +203,7 @@ $.fn.mstab = function (op) {
 		tab(_this);
 	});
 };
+
+   return jQuery.fn.mstab;
+});
+
